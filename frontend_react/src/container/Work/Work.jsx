@@ -11,12 +11,21 @@ const Work = () => {
   const [activeFilter, setActiveFilter] = useState("UI/UX");
   const [animateCard, setAnimateCard] = useState({ y: 0, opacity: 1 });
   const [works, setWorks] = useState([]);
+  const [tags, setTags] = useState([]);
   const [filterWorks, setFilterWorks] = useState([]);
 
   useEffect(() => {
     const query = `*[_type == "works"]`;
 
     client.fetch(query).then((data) => {
+      data.sort((a, b) => a.order - b.order);
+      // iterate through data for tags
+      let traverse = data.map((item) => item.tags);
+      // flatten the array and remove duplicates
+      traverse = [...new Set(traverse.flat())];
+      // sort the tags
+      traverse.sort((a, b) => a.localeCompare(b));
+      setTags(traverse);
       setWorks(data);
       setFilterWorks(data);
     });
@@ -42,16 +51,14 @@ const Work = () => {
       <h2 className="head-text">
         My Creative <span>Portfolio</span> Section
       </h2>
-
       <div className="app__work-filter">
-        {["UI/UX", "Web Design", "Web Development", "Mobile App", "All"].map(
+        {tags.map(
           (item, index) => (
             <div
               key={index}
               onClick={() => handleWorkFilter(item)}
-              className={`app__work-filter-item app__flex p-text ${
-                activeFilter === item ? "item-active" : ""
-              }`}
+              className={`app__work-filter-item app__flex p-text ${activeFilter === item ? "item-active" : ""
+                }`}
             >
               {item}
             </div>
@@ -106,13 +113,16 @@ const Work = () => {
 
             <div className="app__work-content app__flex">
               <h4 className="bold-text">{work.title}</h4>
-              <p className="p-text" style={{ marginTop: 10 }}>
-                {work.description}
-              </p>
-              <div className="app__work-tag app__flex">
-                <p className="p-text">{work.tags[0]}</p>
+              <div className="app__work-description">
+                <p className="p-text" style={{ marginTop: 10 }}>
+                  {work.description}
+                </p>
               </div>
+              {/* <div className="app__work-tag app__flex">
+                <p className="p-text">{work.tags[0]}</p>
+              </div> */}
             </div>
+
           </div>
         ))}
       </motion.div>
@@ -122,6 +132,6 @@ const Work = () => {
 
 export default AppWrap(
   MotionWrap(Work, "app__works"),
-  "work",
+  "projects",
   "app__primarybg"
 );

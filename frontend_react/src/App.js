@@ -5,6 +5,7 @@ import { Navbar } from "./components";
 import "./App.scss";
 
 const App = () => {
+  // console.log("HERE");
   return (
     <div className="app">
       <Navbar />
@@ -13,7 +14,7 @@ const App = () => {
       <Work />
       <Skills />
       {/* <Testimonial /> */}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

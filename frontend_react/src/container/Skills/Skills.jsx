@@ -66,7 +66,7 @@ const Skills = () => {
                       <h4 className="bold-text">{work.name}</h4>
                       <p className="p-text">{work.company}</p>
                     </motion.div>
-                    <Tooltip
+                    {/* <Tooltip
                       id={work.name}
                       effect="solid"
                       arrowColor="#fff"
@@ -77,7 +77,10 @@ const Skills = () => {
                       delayHide={0}
                     >
                       {work.desc}
-                    </Tooltip>
+                    </Tooltip> */}
+                    <p className="p-text" style={{ marginTop: 10 }}>
+                      {work.desc}
+                    </p>
                   </>
                 ))}
               </motion.div>
@@ -91,6 +94,6 @@ const Skills = () => {
 
 export default AppWrap(
   MotionWrap(Skills, "app__skills"),
-  "skills",
+  "work experience",
   "app__whitebg"
 );

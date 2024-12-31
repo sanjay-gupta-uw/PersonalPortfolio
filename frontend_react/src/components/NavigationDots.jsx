@@ -1,14 +1,16 @@
 import React from "react";
+// import navItems from constants.js (same folder)
+import { navItems } from "./constants";
 
 const NavigationDots = ({ active }) => {
   return (
     <div className="app__navigation">
-      {["home", "about", "work", "skills", "contact"].map((item, index) => (
+      {navItems.map((item, index) => (
         <a
-          href={`${item}`}
+          href={`#${item}`}
           key={item + index}
-          style={active === item ? { color: "#313BAC" } : {}}
           className="app__navigation-dot"
+          style={active === item ? { backgroundColor: "# 313BAC" } : {}}
         />
       ))}
     </div>

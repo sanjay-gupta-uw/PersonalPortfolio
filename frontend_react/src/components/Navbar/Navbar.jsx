@@ -3,20 +3,37 @@ import "./Navbar.scss";
 import { images } from "../../constants";
 import { HiMenuAlt4, HiX } from "react-icons/hi";
 import { motion } from "framer-motion";
+import { navItems } from "../constants";
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
 
+  // Function to handle scrolling to section
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <nav className="app__navbar">
       <div className="app__navbar-logo">
-        <img src={images.logo} alt="logo" />
+        <h1>
+          Sanjay Gupta
+        </h1>
+        {/* <img src={images.logo} alt="logo" /> */}
       </div>
       <ul className="app__navbar-links">
-        {["home", "about", "work", "skills", "contact"].map((item) => (
+        {navItems.map((item) => (
           <li className="app__flex p-text" key={`link-${item}`}>
             <div />
-            <a href={`${item}`}>{item}</a>
+            <a
+              href={`#${item}`}  // Link with id to trigger scroll
+              onClick={() => scrollToSection(item)}  // Call scroll function
+            >
+              {item}
+            </a>
           </li>
         ))}
       </ul>
@@ -31,9 +48,15 @@ const Navbar = () => {
           >
             <HiX onClick={() => setToggle(false)} />
             <ul>
-              {["home", "about", "work", "skills", "contact"].map((item) => (
+              {navItems.map((item) => (
                 <li key={item}>
-                  <a href={`${item}`} onClick={() => setToggle(false)}>
+                  <a
+                    href={`#${item}`}  // Link with id to trigger scroll
+                    onClick={() => {
+                      setToggle(false);
+                      scrollToSection(item); // Call scroll function on mobile
+                    }}
+                  >
                     {item}
                   </a>
                 </li>
